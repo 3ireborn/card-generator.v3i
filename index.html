@@ -6,7 +6,7 @@
     <title>Generator Kartu E-Toll NPA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         body { background-color: #0f172a; color: white; font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
         
@@ -24,7 +24,7 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
-        /* Desain Chip (Dikembalikan ke Warna Kuning Emas) */
+        /* Desain Chip Kuning Emas */
         .chip {
             width: 55px;
             height: 40px;
@@ -40,14 +40,14 @@
         }
         .chip div { border: 1px solid rgba(113, 63, 18, 0.4); border-radius: 2px; }
 
-        /* Silver Emboss 3D yang Sangat Mewah */
+        /* Silver Emboss 3D yang Sempurna (Tidak Bocor) */
         .silver-emboss {
-            color: #f8fafc; /* Warna dasar putih silver */
+            color: #e2e8f0; /* Warna dasar silver natural */
             text-shadow: 
-                -1px -1px 0px #ffffff, 
-                1px 1px 0px #64748b,  
-                2px 2px 4px rgba(0,0,0,0.9), 
-                3px 3px 8px rgba(0,0,0,0.7);
+                -1px -1px 1px rgba(255, 255, 255, 0.6), /* Highlight cahaya dari kiri atas */
+                1px 1px 1px rgba(0, 0, 0, 0.9),         /* Bayangan dalam di kanan bawah */
+                2px 2px 3px rgba(0, 0, 0, 0.6);         /* Bayangan jatuh (drop shadow) tipis */
+            letter-spacing: 1px;
         }
 
         /* Frame Foto KTP Style */
@@ -114,17 +114,14 @@
                 <!-- KARTU ASLI -->
                 <div id="vvipCard" class="card-container p-8 z-10 shrink-0">
                     
-                    <!-- Background Daun Kelapa SVG (Opacity Dinaikkan jadi 18%) -->
+                    <!-- Background Daun Kelapa SVG (Opacity 18%) -->
                     <svg class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-[0.18]" viewBox="0 0 600 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Batang Utama -->
                         <path d="M -50,420 Q 300,190 650,-50" stroke="white" stroke-width="6"/>
-                        <!-- Daun Atas/Kanan -->
                         <path d="M 50,348 Q 150,200 300,150" stroke="white" stroke-width="2"/>
                         <path d="M 150,285 Q 250,150 400,100" stroke="white" stroke-width="2"/>
                         <path d="M 250,221 Q 350,100 500,50" stroke="white" stroke-width="2"/>
                         <path d="M 350,158 Q 450,50 600,20" stroke="white" stroke-width="2"/>
                         <path d="M 450,95 Q 550,0 650,-20" stroke="white" stroke-width="2"/>
-                        <!-- Daun Bawah/Kiri -->
                         <path d="M 100,316 Q 200,370 350,390" stroke="white" stroke-width="2"/>
                         <path d="M 200,253 Q 300,310 450,340" stroke="white" stroke-width="2"/>
                         <path d="M 300,190 Q 400,250 550,290" stroke="white" stroke-width="2"/>
@@ -132,13 +129,22 @@
                         <path d="M 500,63 Q 600,130 700,190" stroke="white" stroke-width="2"/>
                     </svg>
 
+                    <!-- KIRI ATAS: Icon Contactless & Text Smart Card -->
+                    <div class="absolute top-8 left-[40px] z-20 flex flex-col items-center opacity-70">
+                        <!-- Icon Sinyal NFC (Contactless) -->
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+                            <path d="M8 4a16 16 0 0 1 0 16"></path>
+                            <path d="M12 7a10 10 0 0 1 0 10"></path>
+                            <path d="M16 10a5 5 0 0 1 0 4"></path>
+                        </svg>
+                        <span class="text-[7px] font-bold tracking-[0.15em] text-slate-300">SMART CARD</span>
+                    </div>
+
                     <!-- TOP CENTER: Logo NPA -->
                     <div class="absolute top-6 left-1/2 transform -translate-x-1/2 text-center z-20 w-full flex flex-col items-center">
                         <div class="flex justify-center items-center gap-1">
-                            <!-- Panah dihapus -->
                             <h1 class="text-[38px] font-black tracking-tighter text-yellow-500" style="text-shadow: 0 4px 6px rgba(0,0,0,0.8);">NPA</h1>
                         </div>
-                        <!-- SMART SYSTEM diturunkan (mt-1) -->
                         <h2 class="text-[10px] font-bold tracking-[0.3em] text-yellow-400 mt-1 mb-1">SMART SYSTEM</h2>
                         <h3 class="text-[7px] font-bold tracking-[0.2em] text-silver">NGANGGUR PRENEUR AKADEMI</h3>
                     </div>
@@ -159,16 +165,17 @@
                         </div>
                     </div>
 
-                    <!-- KIRI BAWAH: Nama & ID (Silver Emboss & Tidak Nabrak) -->
+                    <!-- KIRI BAWAH: Nama & ID (True Silver Emboss & Lurus) -->
                     <div class="absolute bottom-8 left-[40px] z-30">
                         <p class="text-[9px] font-bold tracking-widest text-gray-400 mb-1">NAMA MEMBER</p>
-                        <!-- max-width mencegah teks nabrak foto/elemen lain -->
+                        <!-- Huruf tegak lurus, tidak bocor -->
                         <p id="cardName" class="text-[26px] font-black mb-3 silver-emboss truncate w-[350px]">
                             Kurniawan
                         </p>
                         
                         <p class="text-[9px] font-bold tracking-widest text-gray-400 mb-1">ID MEMBER</p>
-                        <p id="cardId" class="text-[22px] font-medium tracking-widest silver-emboss font-serif italic">
+                        <!-- Dihilangkan italic-nya, pakai font monospaced angka -->
+                        <p id="cardId" class="text-[22px] font-bold tracking-[0.1em] silver-emboss">
                             0000 2206 1970
                         </p>
                     </div>
