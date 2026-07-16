@@ -30,7 +30,7 @@
             
             <!-- Upload Gambar -->
             <div class="space-y-2">
-                <label class="block text-sm font-bold text-gold uppercase tracking-wider">1. Upload Gambar (Akan Dianalisis AI)</label>
+                <label class="block text-sm font-bold text-gold uppercase tracking-wider">1. Upload Gambar (Opsional)</label>
                 <div class="flex items-center justify-center w-full">
                     <label class="flex flex-col items-center justify-center w-full h-40 border-2 border-slate-600 border-dashed rounded-2xl cursor-pointer bg-slate-800 hover:bg-slate-700 transition relative overflow-hidden">
                         <div class="flex flex-col items-center justify-center pt-5 pb-6" id="upload-placeholder">
@@ -46,12 +46,12 @@
             <!-- Konteks Bisnis -->
             <div class="space-y-2">
                 <label class="block text-sm font-bold text-gold uppercase tracking-wider">2. Konteks / Nama Produk</label>
-                <input type="text" id="context" placeholder="Contoh: Jasa Custom Web FB PRO, NPA Smart System..." class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition">
+                <input type="text" id="context" placeholder="Contoh: Tips FB PRO, Jasa Custom Web, dll..." class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition">
             </div>
 
             <!-- Style Dropdown -->
             <div class="space-y-2">
-                <label class="block text-sm font-bold text-gold uppercase tracking-wider">3. Gaya Bahasa (Style)</label>
+                <label class="block text-sm font-bold text-gold uppercase tracking-wider">3. Gaya Bahasa Caption</label>
                 <div class="relative">
                     <select id="style" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white appearance-none focus:outline-none focus:border-amber-500 transition">
                         <option value="FOMO (Menakut-nakuti agar prospek takut ketinggalan)">🔥 FOMO (Fear Of Missing Out)</option>
@@ -66,8 +66,25 @@
                 </div>
             </div>
 
+            <!-- Ekspresi Wajah & Pose Dropdown (BARU) -->
+            <div class="space-y-2">
+                <label class="block text-sm font-bold text-gold uppercase tracking-wider">4. Ekspresi & Pose (Untuk Thumbnail)</label>
+                <div class="relative">
+                    <select id="expression" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white appearance-none focus:outline-none focus:border-amber-500 transition">
+                        <option value="Menunjuk ke atas atau ke samping (Ruang kosong untuk teks)">☝️ Menunjuk (Jari Mengarahkan ke Teks)</option>
+                        <option value="Kaget / Mulut terbuka lebar (Shocked)">😲 Kaget Melongo (Melihat Teks Sensasional)</option>
+                        <option value="Berpikir keras sambil memegang dagu">🤔 Berpikir Keras (Ada Masalah / Pertanyaan Besar)</option>
+                        <option value="Tersenyum percaya diri dan berwibawa">😊 Senyum Berwibawa (Pemberi Solusi)</option>
+                        <option value="Tangan memohon / Namaste">🙏🏻 Memohon / Berterima Kasih</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                        <span class="text-slate-400">▼</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Tombol Generate -->
-            <button onclick="generatePrompt()" class="w-full bg-gold hover:opacity-90 text-slate-900 font-black py-4 rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all uppercase tracking-widest text-lg font-m flex justify-center items-center gap-2">
+            <button onclick="generatePrompt()" class="w-full bg-gold hover:opacity-90 text-slate-900 font-black py-4 rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all uppercase tracking-widest text-lg font-m flex justify-center items-center gap-2 mt-4">
                 <span>🤖 Generate Super Prompt</span>
             </button>
         </div>
@@ -80,8 +97,8 @@
                     📋 Copy Prompt
                 </button>
             </div>
-            <p class="text-sm text-slate-400 mb-3">Copy teks di bawah ini dan paste ke AI favorit Ndan bersama dengan gambar yang dilampirkan.</p>
-            <textarea id="result-prompt" readonly class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-4 text-slate-200 h-80 focus:outline-none resize-none"></textarea>
+            <p class="text-sm text-slate-400 mb-3">Copy teks di bawah ini dan paste ke AI favorit Ndan.</p>
+            <textarea id="result-prompt" readonly class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-4 text-slate-200 h-96 focus:outline-none resize-none"></textarea>
         </div>
 
     </div>
@@ -104,6 +121,7 @@
         function generatePrompt() {
             const context = document.getElementById('context').value;
             const style = document.getElementById('style').value;
+            const expression = document.getElementById('expression').value;
             const outputArea = document.getElementById('output-area');
             const resultPrompt = document.getElementById('result-prompt');
             const imageUploaded = document.getElementById('image-upload').files.length > 0;
@@ -114,10 +132,10 @@
             }
 
             let imageText = imageUploaded 
-                ? "Saya melampirkan sebuah gambar. Tolong analisis gambar tersebut dan jadikan sebagai bahan utama untuk membuat HOOK caption, serta jadikan referensi untuk membuat ide teks Thumbnail yang nendang." 
-                : "Tidak ada gambar yang dilampirkan. Buatkan narasi yang kuat berdasarkan konteks yang diberikan, dan imajinasikan ide visual untuk Thumbnail-nya.";
+                ? "Saya melampirkan sebuah referensi gambar." 
+                : "Tidak ada gambar yang dilampirkan, buatkan murni dari imajinasimu.";
 
-            const finalPrompt = `Halo Asisten AI! Bertindaklah sebagai Expert Copywriter Spesialis FB PRO dan Desainer Thumbnail CTR Tinggi.\n\nTugas kamu adalah membuat 2 hal: Caption Sosial Media dan Ide Teks Thumbnail berdasarkan data berikut:\n\n1. KONTEKS BISNIS: "${context}"\n2. GAYA BAHASA: ${style}\n3. KONDISI VISUAL: ${imageText}\n\n=== BAGIAN 1: STRUKTUR CAPTION ===\nBuat caption dengan pola berikut:\n[HOOK] : 1-2 kalimat awal yang bikin kaget/berhenti scrolling.\n[MASALAH] : Jabarkan keresahan atau kerugian target market.\n[SOLUSI] : Masukkan penawaran produk saya secara elegan.\n[CTA] : Arahkan untuk klik link/komen.\n[TAG] : 5-7 hashtag tertarget.\n(Pastikan paragraf tidak rapat dan gunakan emoji yang sesuai).\n\n=== BAGIAN 2: IDE THUMBNAIL CTR TINGGI ===\nBerikan instruksi spesifik berupa teks overlay yang sangat Clickbait (namun relevan) untuk ditempel pada gambar tersebut. \nATURAN WARNA: Tentukan elemen teks mana yang harus diwarnai PUTIH, KUNING, dan MERAH agar mencolok mata.\nSesuaikan nuansa kata-kata pada Thumbnail dengan Gaya Bahasa (${style}) yang dipilih agar selaras dengan caption.\n\nKerjakan sekarang!`;
+            const finalPrompt = `Halo Asisten AI! Bertindaklah sebagai Expert Copywriter Spesialis FB PRO dan Desainer Thumbnail CTR Tinggi (Seperti gaya YouTuber profesional).\n\nTugas kamu adalah merumuskan rancangan Konten & Visual berdasarkan data berikut:\n\n1. KONTEKS KONTEN: "${context}"\n2. GAYA BAHASA CAPTION: ${style}\n3. EKSPRESI & POSE KARAKTER: ${expression}\n4. KONDISI VISUAL: ${imageText}\n\n=== TAHAP 1: RANCANGAN THUMBNAIL CTR TINGGI ===\nBerikan ide prompt untuk membuat gambar dasarnya (jika menggunakan Midjourney/Bing), pastikan karakternya menggunakan ekspresi/pose "${expression}".\nLalu, buatkan instruksi teks Clickbait (maksimal 4-5 kata) untuk ditempel di atas gambar tersebut.\nATURAN WARNA: Tentukan kata mana yang harus diberi warna PUTIH, KUNING, dan latar belakang kotak MERAH/BIRU agar mencolok.\nATURAN POSISI: Teks harus disesuaikan dengan pose tubuh (contoh: jika pose menunjuk, letakkan teks searah jari tangan).\n\n=== TAHAP 2: STRUKTUR CAPTION FB PRO ===\nBuat caption dengan pola berikut yang selaras dengan teks thumbnail di atas:\n[HOOK] : 1-2 kalimat awal yang bikin berhenti scrolling.\n[MASALAH] : Jabarkan keresahan target market.\n[SOLUSI] : Masukkan penawaran saya secara elegan.\n[CTA] : Arahkan untuk klik link/komen.\n[TAG] : 5-7 hashtag tertarget.\n(Gunakan emoji dan spasi antar paragraf).\n\nKerjakan sekarang!`;
 
             resultPrompt.value = finalPrompt;
             
@@ -134,7 +152,7 @@
             copyText.select();
             copyText.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(copyText.value);
-            alert("Lapor Ndan! Prompt lengkap dengan Instruksi Thumbnail CTR Tinggi sudah di-copy. Siap dieksekusi! 🫡🚀");
+            alert("Lapor Ndan! Prompt canggih lengkap dengan instruksi Ekspresi Wajah sudah diamankan di Clipboard! 🫡🚀");
         }
     </script>
 </body>
