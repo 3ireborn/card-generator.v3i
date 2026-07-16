@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NPA AI - Caption Generator Pro</title>
+    <title>NPA TRI AI - Generator Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -22,7 +22,7 @@
             <h1 class="text-3xl md:text-5xl font-black text-white font-m uppercase tracking-wide">
                 <span class="text-gold">NPA TRI AI</span> Generator
             </h1>
-            <p class="text-slate-400">Pabrik Caption Mesin Uang (Hook-Masalah-Solusi-CTA-Tag)</p>
+            <p class="text-slate-400">Pabrik Caption & Ide Thumbnail CTR Tinggi</p>
         </div>
 
         <!-- MAIN FORM -->
@@ -30,7 +30,7 @@
             
             <!-- Upload Gambar -->
             <div class="space-y-2">
-                <label class="block text-sm font-bold text-gold uppercase tracking-wider">1. Upload Gambar / Thumbnail (Opsional)</label>
+                <label class="block text-sm font-bold text-gold uppercase tracking-wider">1. Upload Gambar (Akan Dianalisis AI)</label>
                 <div class="flex items-center justify-center w-full">
                     <label class="flex flex-col items-center justify-center w-full h-40 border-2 border-slate-600 border-dashed rounded-2xl cursor-pointer bg-slate-800 hover:bg-slate-700 transition relative overflow-hidden">
                         <div class="flex flex-col items-center justify-center pt-5 pb-6" id="upload-placeholder">
@@ -46,7 +46,7 @@
             <!-- Konteks Bisnis -->
             <div class="space-y-2">
                 <label class="block text-sm font-bold text-gold uppercase tracking-wider">2. Konteks / Nama Produk</label>
-                <input type="text" id="context" placeholder="Contoh: Jualan Kopi Juwara, Jasa Web Kuda Troya, dll..." class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition">
+                <input type="text" id="context" placeholder="Contoh: Jasa Custom Web FB PRO, NPA Smart System..." class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition">
             </div>
 
             <!-- Style Dropdown -->
@@ -55,9 +55,9 @@
                 <div class="relative">
                     <select id="style" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white appearance-none focus:outline-none focus:border-amber-500 transition">
                         <option value="FOMO (Menakut-nakuti agar prospek takut ketinggalan)">🔥 FOMO (Fear Of Missing Out)</option>
-                        <option value="Pro & Kontra (Polarisasi, memancing perdebatan di kolom komentar)">⚔️ Pro & Kontra (Bikin Rame Komen)</option>
-                        <option value="Story-Telling (Bercerita, menyentuh emosi, menginspirasi)">📖 Story-Telling (Sentuh Emosi)</option>
-                        <option value="Sarkas / Nyinyir (Menyindir kebiasaan buruk prospek secara halus)">😏 Sarkas / Sindiran Halus</option>
+                        <option value="Pro & Kontra (Polarisasi, memancing perdebatan)">⚔️ Pro & Kontra (Bikin Rame Komen)</option>
+                        <option value="Story-Telling (Bercerita, menyentuh emosi)">📖 Story-Telling (Sentuh Emosi)</option>
+                        <option value="Sarkas / Nyinyir (Menyindir kebiasaan buruk)">😏 Sarkas / Sindiran Halus</option>
                         <option value="Hard Selling (Langsung jualan to the point)">💰 Hard Selling (To The Point)</option>
                     </select>
                     <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
@@ -80,14 +80,13 @@
                     📋 Copy Prompt
                 </button>
             </div>
-            <p class="text-sm text-slate-400 mb-3">Copy teks di bawah ini dan paste ke Beb (Gemini) atau ChatGPT untuk mendapatkan hasil caption yang instan!</p>
-            <textarea id="result-prompt" readonly class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-4 text-slate-200 h-64 focus:outline-none resize-none"></textarea>
+            <p class="text-sm text-slate-400 mb-3">Copy teks di bawah ini dan paste ke AI favorit Ndan bersama dengan gambar yang dilampirkan.</p>
+            <textarea id="result-prompt" readonly class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-4 text-slate-200 h-80 focus:outline-none resize-none"></textarea>
         </div>
 
     </div>
 
     <script>
-        // Fungsi untuk Preview Gambar
         function previewImage(event) {
             const reader = new FileReader();
             reader.onload = function() {
@@ -102,7 +101,6 @@
             }
         }
 
-        // Fungsi merakit Super Prompt
         function generatePrompt() {
             const context = document.getElementById('context').value;
             const style = document.getElementById('style').value;
@@ -111,36 +109,32 @@
             const imageUploaded = document.getElementById('image-upload').files.length > 0;
 
             if(!context) {
-                alert("Siap Ndan! Tapi tolong isi kolom 'Konteks / Nama Produk' dulu ya biar AI-nya nggak bingung. 🫡");
+                alert("Lapor Ndan! Konteks atau Nama Produk wajib diisi dulu! 🫡");
                 return;
             }
 
             let imageText = imageUploaded 
-                ? "Saya akan melampirkan sebuah gambar. Tolong analisis gambar tersebut dan jadikan sebagai bahan utama untuk membuat HOOK dan MASALAH yang *relate* dengan visualnya." 
-                : "Tidak ada gambar yang dilampirkan, buatkan narasi yang kuat berdasarkan konteks yang diberikan.";
+                ? "Saya melampirkan sebuah gambar. Tolong analisis gambar tersebut dan jadikan sebagai bahan utama untuk membuat HOOK caption, serta jadikan referensi untuk membuat ide teks Thumbnail yang nendang." 
+                : "Tidak ada gambar yang dilampirkan. Buatkan narasi yang kuat berdasarkan konteks yang diberikan, dan imajinasikan ide visual untuk Thumbnail-nya.";
 
-            // Merakit Prompt Ajaib Ndan
-            const finalPrompt = `Halo Asisten AI! Bertindaklah sebagai Expert Copywriter Spesialis FB PRO & Sosial Media.\n\nTugas kamu adalah membuat caption sosial media yang sangat menghipnotis (Ciamik) berdasarkan data berikut:\n\n1. KONTEKS BISNIS / PRODUK: "${context}"\n2. GAYA BAHASA (STYLE): ${style}\n3. KONDISI VISUAL: ${imageText}\n\nSTRUKTUR WAJIB (Jangan diubah):\n[HOOK] : 1-2 kalimat awal yang bikin orang berhenti scrolling (wajib nendang/bikin kaget).\n[MASALAH] : Jabarkan rasa sakit, keresahan, atau kerugian yang dialami target market saat ini.\n[SOLUSI] : Masukkan penawaran produk/jasa saya secara elegan sebagai obat dari masalah tersebut.\n[CTA] : Kalimat Call To Action yang jelas (arahkan untuk klik link di bio / komen).\n[TAG] : Berikan 5-7 hashtag yang tertarget.\n\nBuatlah formatting-nya rapi, gunakan emoji yang pas, dan pastikan paragrafnya tidak terlalu rapat agar enak dibaca di HP. Gas!`;
+            const finalPrompt = `Halo Asisten AI! Bertindaklah sebagai Expert Copywriter Spesialis FB PRO dan Desainer Thumbnail CTR Tinggi.\n\nTugas kamu adalah membuat 2 hal: Caption Sosial Media dan Ide Teks Thumbnail berdasarkan data berikut:\n\n1. KONTEKS BISNIS: "${context}"\n2. GAYA BAHASA: ${style}\n3. KONDISI VISUAL: ${imageText}\n\n=== BAGIAN 1: STRUKTUR CAPTION ===\nBuat caption dengan pola berikut:\n[HOOK] : 1-2 kalimat awal yang bikin kaget/berhenti scrolling.\n[MASALAH] : Jabarkan keresahan atau kerugian target market.\n[SOLUSI] : Masukkan penawaran produk saya secara elegan.\n[CTA] : Arahkan untuk klik link/komen.\n[TAG] : 5-7 hashtag tertarget.\n(Pastikan paragraf tidak rapat dan gunakan emoji yang sesuai).\n\n=== BAGIAN 2: IDE THUMBNAIL CTR TINGGI ===\nBerikan instruksi spesifik berupa teks overlay yang sangat Clickbait (namun relevan) untuk ditempel pada gambar tersebut. \nATURAN WARNA: Tentukan elemen teks mana yang harus diwarnai PUTIH, KUNING, dan MERAH agar mencolok mata.\nSesuaikan nuansa kata-kata pada Thumbnail dengan Gaya Bahasa (${style}) yang dipilih agar selaras dengan caption.\n\nKerjakan sekarang!`;
 
             resultPrompt.value = finalPrompt;
             
-            // Animasi memunculkan output
             outputArea.classList.remove('hidden');
             setTimeout(() => {
                 outputArea.classList.remove('opacity-0');
             }, 50);
 
-            // Scroll ke bawah
             outputArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // Fungsi Copy
         function copyToClipboard() {
             const copyText = document.getElementById("result-prompt");
             copyText.select();
-            copyText.setSelectionRange(0, 99999); /* Untuk HP */
+            copyText.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(copyText.value);
-            alert("Lapor Ndan! Prompt sudah berhasil di-copy ke Clipboard. Tinggal paste ke Beb! 🫡🚀");
+            alert("Lapor Ndan! Prompt lengkap dengan Instruksi Thumbnail CTR Tinggi sudah di-copy. Siap dieksekusi! 🫡🚀");
         }
     </script>
 </body>
